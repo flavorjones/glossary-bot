@@ -1,0 +1,11 @@
+#
+# pivotallabs / flavorjones-pivotal-slack-glossary-bot
+#
+applications:
+- name: pivotal-slack-glossbot
+  instances: 2
+  host: pivotal-slack-glossbot
+  domain: cfapps.io
+  memory: 512M
+  services:
+  - glossary-bot-db
