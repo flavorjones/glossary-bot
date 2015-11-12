@@ -34,8 +34,8 @@ def get_payload_values(channel_id=u'', text=None):
     payload_values = {}
     payload_values['channel'] = channel_id
     payload_values['text'] = text
-    payload_values['username'] = u'Glossary Bot'
-    payload_values['icon_emoji'] = u':lipstick:'
+#    payload_values['username'] = u'Glossary Bot'
+#    payload_values['icon_emoji'] = u':lipstick:'
     return payload_values
 
 def send_webhook_with_attachment(channel_id=u'', text=None, fallback=u'', pretext=u'', title=u'', color=u'#f33373', image_url=None, mrkdwn_in=[]):
