@@ -34,7 +34,7 @@ def get_payload_values(channel_id=u'', text=None):
     payload_values = {}
     payload_values['channel'] = channel_id
     payload_values['text'] = text
-    payload_values['username'] = u'Gloss Bot'
+    payload_values['username'] = u'Glossary Bot'
     payload_values['icon_emoji'] = u':lipstick:'
     return payload_values
 
@@ -230,7 +230,7 @@ def query_definition_and_get_response(slash_command, command_text, user_name, ch
         # remember this query
         log_query(term=command_text, user_name=user_name, action=u'not_found')
 
-        return u'Sorry, but *Gloss Bot* has no definition for *{term}*. You can set a definition with the command *{command} {term} = <definition>*'.format(command=slash_command, term=command_text), 200
+        return u'Sorry, but *Glossary Bot* has no definition for *{term}*. You can set a definition with the command *{command} {term} = <definition>*'.format(command=slash_command, term=command_text), 200
 
     # remember this query
     log_query(term=command_text, user_name=user_name, action=u'found')
@@ -255,11 +255,11 @@ def set_definition_and_get_response(slash_command, command_params, user_name):
 
     # reject poorly formed set commands
     if u'=' not in command_params or not set_term or not set_value:
-        return u'Sorry, but *Gloss Bot* didn\'t understand your command. You can set definitions like this: *{command} EW = Eligibility Worker*'.format(command=slash_command), 200
+        return u'Sorry, but *Glossary Bot* didn\'t understand your command. You can set definitions like this: *{command} EW = Eligibility Worker*'.format(command=slash_command), 200
 
     # reject attempts to set reserved terms
     if set_term.lower() in STATS_CMDS + RECENT_CMDS + HELP_CMDS:
-        return u'Sorry, but *Gloss Bot* can\'t set a definition for *{}* because it\'s a reserved term.'.format(set_term)
+        return u'Sorry, but *Glossary Bot* can\'t set a definition for *{}* because it\'s a reserved term.'.format(set_term)
 
     # check the database to see if the term's already defined
     entry = query_definition(set_term)
@@ -276,12 +276,12 @@ def set_definition_and_get_response(slash_command, command_params, user_name):
                 db.session.add(entry)
                 db.session.commit()
             except Exception as e:
-                return u'Sorry, but *Gloss Bot* was unable to update that definition: {}, {}'.format(e.message, e.args), 200
+                return u'Sorry, but *Glossary Bot* was unable to update that definition: {}, {}'.format(e.message, e.args), 200
 
-            return u'*Gloss Bot* has set the definition for *{}* to *{}*, overwriting the previous entry, which was *{}* defined as *{}*'.format(set_term, set_value, last_term, last_value), 200
+            return u'*Glossary Bot* has set the definition for *{}* to *{}*, overwriting the previous entry, which was *{}* defined as *{}*'.format(set_term, set_value, last_term, last_value), 200
 
         else:
-            return u'*Gloss Bot* already knows that the definition for *{}* is *{}*'.format(set_term, set_value), 200
+            return u'*Glossary Bot* already knows that the definition for *{}* is *{}*'.format(set_term, set_value), 200
 
     # save the definition in the database
     entry = Definition(term=set_term, definition=set_value, user_name=user_name)
@@ -289,9 +289,9 @@ def set_definition_and_get_response(slash_command, command_params, user_name):
         db.session.add(entry)
         db.session.commit()
     except Exception as e:
-        return u'Sorry, but *Gloss Bot* was unable to save that definition: {}, {}'.format(e.message, e.args), 200
+        return u'Sorry, but *Glossary Bot* was unable to save that definition: {}, {}'.format(e.message, e.args), 200
 
-    return u'*Gloss Bot* has set the definition for *{}* to *{}*'.format(set_term, set_value), 200
+    return u'*Glossary Bot* has set the definition for *{}* to *{}*'.format(set_term, set_value), 200
 
 #
 # ROUTES
@@ -352,16 +352,16 @@ def index():
         # verify that the definition is in the database
         entry = query_definition(delete_term)
         if not entry:
-            return u'Sorry, but *Gloss Bot* has no definition for *{}*'.format(delete_term), 200
+            return u'Sorry, but *Glossary Bot* has no definition for *{}*'.format(delete_term), 200
 
         # delete the definition from the database
         try:
             db.session.delete(entry)
             db.session.commit()
         except Exception as e:
-            return u'Sorry, but *Gloss Bot* was unable to delete that definition: {}, {}'.format(e.message, e.args), 200
+            return u'Sorry, but *Glossary Bot* was unable to delete that definition: {}, {}'.format(e.message, e.args), 200
 
-        return u'*Gloss Bot* has deleted the definition for *{}*, which was *{}*'.format(delete_term, entry.definition), 200
+        return u'*Glossary Bot* has deleted the definition for *{}*, which was *{}*'.format(delete_term, entry.definition), 200
 
     #
     # HELP
